@@ -1,0 +1,34 @@
+[2026-09-27T21:35:02.625] NOTE: cursor unlocked from current screen
+[2026-09-27T21:35:02.626] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:02.918] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,496
+[2026-09-27T21:35:02.918] INFO: leaving screen
+[2026-09-27T21:35:02.920] DEBUG: hiding cursor
+[2026-09-27T21:35:02.928] DEBUG: open clipboard
+[2026-09-27T21:35:02.930] DEBUG: close clipboard
+[2026-09-27T21:35:02.930] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:02.931] DEBUG: open clipboard
+[2026-09-27T21:35:02.931] DEBUG: close clipboard
+[2026-09-27T21:35:02.932] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:02.933] DEBUG: dropped bogus delta motion: -1725,-75
+[2026-09-27T21:35:02.937] DEBUG: dropped bogus delta motion: -1725,-74
+#### F: cross to Mac, then Scroll Lock (lock to Mac)
+[2026-09-27T21:35:05.700] NOTE: cursor locked to current screen
+[2026-09-27T21:35:05.702] DEBUG: active sides: L (0x00)
+#### G: Scroll Lock again on Mac (unlock), return to Windows
+[2026-09-27T21:35:07.454] NOTE: cursor unlocked from current screen
+[2026-09-27T21:35:07.455] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:09.468] INFO: switch from "MacBook" to "DESKTOP-PC" at 15,1215
+[2026-09-27T21:35:09.469] INFO: entering screen
+[2026-09-27T21:35:09.470] DEBUG: showing cursor
+#### H: Win+Esc hotkey
+[2026-09-27T21:35:12.617] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,556
+[2026-09-27T21:35:12.618] INFO: leaving screen
+[2026-09-27T21:35:12.618] DEBUG: hiding cursor
+[2026-09-27T21:35:12.631] DEBUG: open clipboard
+[2026-09-27T21:35:12.631] DEBUG: close clipboard
+[2026-09-27T21:35:12.632] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:12.633] DEBUG: open clipboard
+[2026-09-27T21:35:12.633] DEBUG: close clipboard
+[2026-09-27T21:35:12.634] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+#### I: Win+Esc again
+#### END

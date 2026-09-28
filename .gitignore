@@ -1,0 +1,9 @@
+# your machine-specific setup: never commit
+settings.json
+trust/*.sha256
+
+__pycache__/
+*.pyc
+.build/
+.swiftpm/
+.DS_Store

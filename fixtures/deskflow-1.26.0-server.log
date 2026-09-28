@@ -1,0 +1,250 @@
+[2026-09-27T21:34:43.825] DEBUG: configuration read successfully
+[2026-09-27T21:34:43.826] DEBUG: settting up primary screen
+[2026-09-27T21:34:43.831] DEBUG: screen shape: 0,0 3440x1440
+[2026-09-27T21:34:43.832] DEBUG: window is 0x00110be8
+[2026-09-27T21:34:43.833] DEBUG: adopting new buffer
+[2026-09-27T21:34:43.833] DEBUG: opened display
+[2026-09-27T21:34:43.833] DEBUG: binding to address: :24800
+[2026-09-27T21:34:43.834] DEBUG: active sides: L (0x02)
+[2026-09-27T21:34:43.834] DEBUG: active sides: L (0x02)
+[2026-09-27T21:34:43.836] DEBUG: enabling primary screen
+[2026-09-27T21:34:43.840] DEBUG: desk Default window is 0x00130b50
+[2026-09-27T21:34:43.841] DEBUG: switched to desk "Default"
+[2026-09-27T21:34:43.841] DEBUG: desktop is accessible - syncing keyboard state after desk switch
+[2026-09-27T21:34:43.843] DEBUG: registered hotkey Super+Escape (id=ef1b mask=0010) as id=1
+[2026-09-27T21:34:43.843] DEBUG: registered hotkey ScrollLock (id=ef14 mask=0000) as id=2
+[2026-09-27T21:34:43.843] IPC: started server, waiting for clients
+[2026-09-27T21:34:43.844] DEBUG: add pending events to buffer
+[2026-09-27T21:34:43.844] DEBUG: screen "DESKTOP-PC" shape changed
+[2026-09-27T21:34:43.880] INFO: accepted secure socket
+[2026-09-27T21:34:43.882] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:34:43.882] NOTE: accepted client connection
+[2026-09-27T21:34:43.882] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:34:43.887] INFO: local languages: en
+[2026-09-27T21:34:43.894] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1709,556
+[2026-09-27T21:34:43.894] DEBUG: active sides: L (0x02)
+[2026-09-27T21:34:43.895] IPC: client "MacBook" has connected
+[2026-09-27T21:34:52.816] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,556
+[2026-09-27T21:34:52.817] INFO: leaving screen
+[2026-09-27T21:34:52.817] DEBUG: hiding cursor
+[2026-09-27T21:34:52.841] INFO: screen "DESKTOP-PC" updated clipboard 0
+[2026-09-27T21:34:52.844] INFO: screen "DESKTOP-PC" updated clipboard 1
+[2026-09-27T21:34:52.844] DEBUG: sending clipboard 0 to "MacBook"
+[2026-09-27T21:34:52.845] DEBUG: sent clipboard size=24
+[2026-09-27T21:34:52.845] DEBUG: sending clipboard 1 to "MacBook"
+[2026-09-27T21:34:52.845] DEBUG: sent clipboard size=24
+[2026-09-27T21:34:54.880] INFO: switch from "MacBook" to "DESKTOP-PC" at 39,720
+[2026-09-27T21:34:54.880] INFO: entering screen
+[2026-09-27T21:34:54.880] DEBUG: showing cursor
+[2026-09-27T21:34:58.845] NOTE: cursor locked to current screen
+[2026-09-27T21:34:58.845] DEBUG: active sides: L (0x00)
+[2026-09-27T21:35:02.625] NOTE: cursor unlocked from current screen
+[2026-09-27T21:35:02.626] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:02.918] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,496
+[2026-09-27T21:35:02.918] INFO: leaving screen
+[2026-09-27T21:35:02.920] DEBUG: hiding cursor
+[2026-09-27T21:35:02.930] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:02.932] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:05.700] NOTE: cursor locked to current screen
+[2026-09-27T21:35:05.702] DEBUG: active sides: L (0x00)
+[2026-09-27T21:35:07.454] NOTE: cursor unlocked from current screen
+[2026-09-27T21:35:07.455] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:09.468] INFO: switch from "MacBook" to "DESKTOP-PC" at 15,1215
+[2026-09-27T21:35:09.469] INFO: entering screen
+[2026-09-27T21:35:09.470] DEBUG: showing cursor
+[2026-09-27T21:35:12.617] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,556
+[2026-09-27T21:35:12.618] INFO: leaving screen
+[2026-09-27T21:35:12.618] DEBUG: hiding cursor
+[2026-09-27T21:35:12.632] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:12.634] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:33.815] INFO: switch from "MacBook" to "DESKTOP-PC" at 4,1015
+[2026-09-27T21:35:33.816] INFO: entering screen
+[2026-09-27T21:35:33.816] DEBUG: showing cursor
+[2026-09-27T21:35:34.673] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,649
+[2026-09-27T21:35:34.675] INFO: leaving screen
+[2026-09-27T21:35:34.676] DEBUG: hiding cursor
+[2026-09-27T21:35:34.688] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:34.689] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:34.696] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,842
+[2026-09-27T21:35:34.697] INFO: entering screen
+[2026-09-27T21:35:34.697] DEBUG: showing cursor
+[2026-09-27T21:35:34.723] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,650
+[2026-09-27T21:35:34.723] INFO: leaving screen
+[2026-09-27T21:35:34.724] DEBUG: hiding cursor
+[2026-09-27T21:35:34.739] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:34.743] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:34.749] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,841
+[2026-09-27T21:35:34.749] INFO: entering screen
+[2026-09-27T21:35:34.749] DEBUG: showing cursor
+[2026-09-27T21:35:35.302] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,622
+[2026-09-27T21:35:35.302] INFO: leaving screen
+[2026-09-27T21:35:35.303] DEBUG: hiding cursor
+[2026-09-27T21:35:35.315] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:35.317] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:35.445] INFO: switch from "MacBook" to "DESKTOP-PC" at 3,746
+[2026-09-27T21:35:35.446] INFO: entering screen
+[2026-09-27T21:35:35.447] DEBUG: showing cursor
+[2026-09-27T21:35:36.207] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,481
+[2026-09-27T21:35:36.208] INFO: leaving screen
+[2026-09-27T21:35:36.210] DEBUG: hiding cursor
+[2026-09-27T21:35:36.223] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:36.224] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:36.228] INFO: switch from "MacBook" to "DESKTOP-PC" at 20,628
+[2026-09-27T21:35:36.228] INFO: entering screen
+[2026-09-27T21:35:36.228] DEBUG: showing cursor
+[2026-09-27T21:35:36.250] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,483
+[2026-09-27T21:35:36.250] INFO: leaving screen
+[2026-09-27T21:35:36.251] DEBUG: hiding cursor
+[2026-09-27T21:35:36.262] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:36.263] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:36.268] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,624
+[2026-09-27T21:35:36.269] INFO: entering screen
+[2026-09-27T21:35:36.269] DEBUG: showing cursor
+[2026-09-27T21:35:36.291] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,482
+[2026-09-27T21:35:36.292] INFO: leaving screen
+[2026-09-27T21:35:36.293] DEBUG: hiding cursor
+[2026-09-27T21:35:36.305] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:36.306] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:36.311] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,624
+[2026-09-27T21:35:36.312] INFO: entering screen
+[2026-09-27T21:35:36.312] DEBUG: showing cursor
+[2026-09-27T21:35:36.333] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,482
+[2026-09-27T21:35:36.333] INFO: leaving screen
+[2026-09-27T21:35:36.334] DEBUG: hiding cursor
+[2026-09-27T21:35:36.346] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:36.348] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:36.899] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,0
+[2026-09-27T21:35:36.900] INFO: entering screen
+[2026-09-27T21:35:36.900] DEBUG: showing cursor
+[2026-09-27T21:35:37.255] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,60
+[2026-09-27T21:35:37.256] INFO: leaving screen
+[2026-09-27T21:35:37.257] DEBUG: hiding cursor
+[2026-09-27T21:35:37.268] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:37.270] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:38.571] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,247
+[2026-09-27T21:35:38.572] INFO: entering screen
+[2026-09-27T21:35:38.572] DEBUG: showing cursor
+[2026-09-27T21:35:38.754] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,191
+[2026-09-27T21:35:38.754] INFO: leaving screen
+[2026-09-27T21:35:38.755] DEBUG: hiding cursor
+[2026-09-27T21:35:38.769] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:38.771] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:40.586] INFO: switch from "MacBook" to "DESKTOP-PC" at 4,987
+[2026-09-27T21:35:40.587] INFO: entering screen
+[2026-09-27T21:35:40.587] DEBUG: showing cursor
+[2026-09-27T21:35:41.575] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,570
+[2026-09-27T21:35:41.578] INFO: leaving screen
+[2026-09-27T21:35:41.578] DEBUG: hiding cursor
+[2026-09-27T21:35:41.589] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:41.591] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:41.744] INFO: accepted secure socket
+[2026-09-27T21:35:41.745] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:41.748] NOTE: accepted client connection
+[2026-09-27T21:35:41.748] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:41.765] INFO: local languages: en
+[2026-09-27T21:35:41.773] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:41.775] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:41.775] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:41.775] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:41.780] DEBUG: tls connection closed
+[2026-09-27T21:35:41.781] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:42.838] INFO: accepted secure socket
+[2026-09-27T21:35:42.838] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:42.840] NOTE: accepted client connection
+[2026-09-27T21:35:42.841] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:42.853] INFO: local languages: en
+[2026-09-27T21:35:42.858] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:42.859] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:42.859] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:42.859] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:42.866] DEBUG: tls connection closed
+[2026-09-27T21:35:42.866] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:43.439] INFO: switch from "MacBook" to "DESKTOP-PC" at 8,264
+[2026-09-27T21:35:43.440] INFO: entering screen
+[2026-09-27T21:35:43.440] DEBUG: showing cursor
+[2026-09-27T21:35:43.898] INFO: accepted secure socket
+[2026-09-27T21:35:43.899] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:43.900] NOTE: accepted client connection
+[2026-09-27T21:35:43.901] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:43.908] INFO: local languages: en
+[2026-09-27T21:35:43.917] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:43.920] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:43.920] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:43.921] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:43.926] DEBUG: tls connection closed
+[2026-09-27T21:35:43.927] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:43.973] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,337
+[2026-09-27T21:35:43.974] INFO: leaving screen
+[2026-09-27T21:35:43.975] DEBUG: hiding cursor
+[2026-09-27T21:35:43.986] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:43.988] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:43.994] INFO: switch from "MacBook" to "DESKTOP-PC" at 62,413
+[2026-09-27T21:35:43.994] INFO: entering screen
+[2026-09-27T21:35:43.995] DEBUG: showing cursor
+[2026-09-27T21:35:44.023] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,332
+[2026-09-27T21:35:44.023] INFO: leaving screen
+[2026-09-27T21:35:44.024] DEBUG: hiding cursor
+[2026-09-27T21:35:44.034] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:44.035] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:44.042] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,430
+[2026-09-27T21:35:44.042] INFO: entering screen
+[2026-09-27T21:35:44.043] DEBUG: showing cursor
+[2026-09-27T21:35:44.058] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,332
+[2026-09-27T21:35:44.058] INFO: leaving screen
+[2026-09-27T21:35:44.060] DEBUG: hiding cursor
+[2026-09-27T21:35:44.073] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:44.074] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:44.454] INFO: switch from "MacBook" to "DESKTOP-PC" at 5,339
+[2026-09-27T21:35:44.455] INFO: entering screen
+[2026-09-27T21:35:44.455] DEBUG: showing cursor
+[2026-09-27T21:35:44.956] INFO: accepted secure socket
+[2026-09-27T21:35:44.957] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:44.958] NOTE: accepted client connection
+[2026-09-27T21:35:44.958] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:44.973] INFO: local languages: en
+[2026-09-27T21:35:44.977] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:44.979] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:44.980] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:44.980] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:44.988] DEBUG: tls connection closed
+[2026-09-27T21:35:44.989] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:46.039] INFO: accepted secure socket
+[2026-09-27T21:35:46.040] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:46.040] NOTE: accepted client connection
+[2026-09-27T21:35:46.041] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:46.043] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,352
+[2026-09-27T21:35:46.045] INFO: leaving screen
+[2026-09-27T21:35:46.046] DEBUG: hiding cursor
+[2026-09-27T21:35:46.057] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:46.058] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:46.060] INFO: local languages: en
+[2026-09-27T21:35:46.065] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:46.067] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:46.067] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:46.068] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:46.073] DEBUG: tls connection closed
+[2026-09-27T21:35:46.073] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:46.379] INFO: switch from "MacBook" to "DESKTOP-PC" at 11,373
+[2026-09-27T21:35:46.380] INFO: entering screen
+[2026-09-27T21:35:46.380] DEBUG: showing cursor
+[2026-09-27T21:35:46.556] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,313
+[2026-09-27T21:35:46.557] INFO: leaving screen
+[2026-09-27T21:35:46.558] DEBUG: hiding cursor
+[2026-09-27T21:35:46.568] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 0 (unchanged)
+[2026-09-27T21:35:46.571] DEBUG: ignored screen "DESKTOP-PC" update of clipboard 1 (unchanged)
+[2026-09-27T21:35:46.580] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,407
+[2026-09-27T21:35:46.580] INFO: entering screen
+[2026-09-27T21:35:46.580] DEBUG: showing cursor
+[2026-09-27T21:35:47.147] INFO: accepted secure socket
+[2026-09-27T21:35:47.148] INFO: network encryption protocol: TLSv1.3
+[2026-09-27T21:35:47.149] NOTE: accepted client connection
+[2026-09-27T21:35:47.149] INFO: saying hello as Barrier, protocol v1.8
+[2026-09-27T21:35:47.158] INFO: local languages: en
+[2026-09-27T21:35:47.193] DEBUG: received client "MacBook" info shape=0,0 1710x1112 at 1492,116
+[2026-09-27T21:35:47.195] WARNING: a client with name "MacBook" is already connected
+[2026-09-27T21:35:47.195] NOTE: disconnecting client "MacBook"
+[2026-09-27T21:35:47.195] DEBUG: active sides: L (0x02)
+[2026-09-27T21:35:47.224] DEBUG: tls connection closed
+[2026-09-27T21:35:47.224] IPC: client "MacBook" has disconnected
+[2026-09-27T21:35:47.226] IPC: client "MacBook" is dead
+[2026-09-27T21:35:47.227] DEBUG: active sides: L (0x02)

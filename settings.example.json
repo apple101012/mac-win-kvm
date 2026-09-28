@@ -1,0 +1,37 @@
+{
+  "port": 24800,
+  "server": {
+    "name": "DESKTOP-PC",
+    "lan": "192.168.1.10",
+    "zerotier": ""
+  },
+  "client": {
+    "name": "MacBook",
+    "side": "left"
+  },
+  "allowedSubnets": ["192.168.1.0/24"],
+  "switching": {
+    "hotkey": "Super+Escape",
+    "deadCorners": ["top-left", "bottom-left"],
+    "cornerSize": 64
+  },
+  "macModifiers": {
+    "ctrl": "ctrl",
+    "alt": "super",
+    "super": "alt"
+  },
+  "macMissionControl": "unchanged",
+  "clipboard": true,
+  "invertScroll": false,
+  "logLevel": 4,
+  "lighting": {
+    "enabled": false,
+    "keyboard": "AULA F87 Pro",
+    "colors": {
+      "windows": "FFFFFF",
+      "mac": "0050FF",
+      "lockedWindows": "FF0000",
+      "lockedMac": "8000FF"
+    }
+  }
+}
