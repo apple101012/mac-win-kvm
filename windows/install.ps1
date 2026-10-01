@@ -67,12 +67,15 @@ if ($LightingOn) {
     Invoke-Native { & python -c "import openrgb" }
     if ($LASTEXITCODE) { Step 'Installing openrgb-python'; Invoke-Native { & python -m pip install --user --quiet 'openrgb-python>=0.3,<0.4' } }
     if (-not (Test-Path $OpenRgbLink)) { Step 'Starting OpenRGB server at login'; New-Shortcut $OpenRgbLink $OpenRgbExe '--server --noautoconnect' (Split-Path $OpenRgbExe) }
-    if (-not (Test-Path $LightingLink)) { Step 'Starting keyboard lighting at login'; New-Shortcut $LightingLink (Get-Pythonw) "-m kvmlight.helper `"$ServerLog`"" $Repo }
-    $codeTime = (Get-ChildItem (Join-Path $Repo 'kvmlight'), (Join-Path $Repo 'settings.json') -Recurse -File | Measure-Object LastWriteTime -Maximum).Maximum
-    $helperStale = Get-LightingHelper | Where-Object { $_.CreationDate -lt $codeTime }
-    if ($helperStale) { Step 'Restarting keyboard lighting (code changed)'; $helperStale | ForEach-Object { Stop-Process -Id $_.ProcessId -Force } }
-    Start-Lighting
 }
+
+# The helper always runs: it's the watchdog that frees input stuck on a Mac that went away (docs/adr/0002),
+# and it drives the keyboard lighting when that's enabled.
+if (-not (Test-Path $HelperLink)) { Step 'Starting the background helper at login'; New-Shortcut $HelperLink (Get-Pythonw) "-m kvmlight.helper `"$ServerLog`"" $Repo }
+$codeTime = (Get-ChildItem (Join-Path $Repo 'kvmlight'), (Join-Path $Repo 'settings.json') -Recurse -File | Measure-Object LastWriteTime -Maximum).Maximum
+$helperStale = Get-Helper | Where-Object { $_.CreationDate -lt $codeTime }
+if ($helperStale) { Step 'Restarting the background helper (code or settings changed)'; $helperStale | ForEach-Object { Stop-Process -Id $_.ProcessId -Force } }
+Start-Helper
 
 if ($changed -and $running) { Step 'Config changed, restarting Deskflow'; $running | Stop-Process -Force; Start-Sleep 1; $running = @() }
 Get-Process deskflow-core -ErrorAction SilentlyContinue | Where-Object { -not (Get-Process deskflow -ErrorAction SilentlyContinue) } | Stop-Process -Force

@@ -104,9 +104,10 @@ Before each step, say in one line what it will do. Before anything that installs
 - **The Mac cursor doesn't move:** Accessibility isn't granted to deskflow-core.
 - **Unreachable:** the IP changed (check `ipconfig`), a VPN is blocking the LAN, or the firewall subnets are wrong in `allowedSubnets`.
 - **Starts locked:** the Scroll Lock toggle is on; press it.
+- **PC keyboard and mouse dead after the Mac dropped off** (e.g. it switched Wi-Fi while it had the cursor): the watchdog restarts Deskflow within about 3 s (`helper.log` says `watchdog:`). If it didn't, check that the helper is running (`windows\doctor.ps1`). Manual escape: Ctrl+Alt+Del → Task Manager → end Deskflow.
 - **Logs:**
   - Mac: `~/Library/Application Support/macwinkvm/client.log`
-  - PC: `%LOCALAPPDATA%\macwinkvm\server.log`, and `lighting.log`
+  - PC: `%LOCALAPPDATA%\macwinkvm\server.log`, and `helper.log` (watchdog and lighting)
 
 ## Uninstall
 

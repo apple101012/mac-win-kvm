@@ -23,13 +23,14 @@ Check 'Deskflow GUI running' { Get-Process deskflow -ErrorAction Stop } 'start D
 Check 'Deskflow server running' { Get-Process deskflow-core -ErrorAction Stop } 'open Deskflow from the tray and press Start'
 Check "listening on port $($Settings.port)" { Get-NetTCPConnection -State Listen -LocalPort $Settings.port -ErrorAction Stop } 'check the Deskflow log'
 
+Check 'background helper (watchdog) starts at login' { Test-Path $HelperLink } 'run windows\install.ps1'
+Check 'background helper (watchdog) running' { @(Get-Helper).Count -gt 0 } 'run windows\install.ps1'
 if ($LightingOn) {
     Check 'OpenRGB installed' { Test-Path $OpenRgbExe } 'run windows\install.ps1'
     Check 'openrgb-python installed' { Invoke-Native { & python -c "import openrgb" }; $LASTEXITCODE -eq 0 } 'run windows\install.ps1'
-    Check 'lighting starts at login' { (Test-Path $OpenRgbLink) -and (Test-Path $LightingLink) } 'run windows\install.ps1'
+    Check 'OpenRGB starts at login' { Test-Path $OpenRgbLink } 'run windows\install.ps1'
     Check 'OpenRGB server running' { Get-Process OpenRGB -ErrorAction Stop } 'run windows\install.ps1'
-    Check 'lighting helper running' { @(Get-LightingHelper).Count -gt 0 } 'run windows\install.ps1'
-    Check 'keyboard colour set' { (Get-Content $LightingLog -Tail 5) -match 'colour [0-9A-F]{6}' } "see $LightingLog"
+    Check 'keyboard colour set' { (Get-Content $HelperLog -Tail 20) -match 'colour [0-9A-F]{6}' } "see $HelperLog"
 }
 Warn  'Ethernet power saving off (Green Ethernet, Power Saving Mode)' { @(Get-NetAdapterAdvancedProperty -Name Ethernet -ErrorAction Stop | Where-Object { $_.DisplayName -in 'Green Ethernet','Power Saving Mode' -and $_.DisplayValue -ne 'Disabled' }).Count -eq 0 } 'causes 100-800 ms lag; see README Troubleshooting'
 

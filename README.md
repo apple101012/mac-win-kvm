@@ -9,6 +9,7 @@ Push the mouse off the edge of your Windows screen and it appears on the Mac; yo
 - **LAN first, with a fallback.** If your home network is flaky, it switches to ZeroTier or Tailscale. It reconnects after the Mac sleeps and can auto-connect when you get home.
 - **Mutual TLS pinning.** Each machine only talks to the other one, and the Windows firewall is limited to your subnets.
 - **Mac-friendly keys.** Alt → ⌘, Win → ⌥, Ctrl → ⌃, so your hands stay in the Mac layout. Switch machines with Win+Esc, and lock the cursor with Scroll Lock (handy for games).
+- **Watchdog:** if the Mac drops off while it has the cursor (for example it switches Wi-Fi), Deskflow 1.26 can leave the PC's keyboard and mouse dead. A background helper notices within about 3 s and restarts Deskflow, so input comes back by itself.
 - **Screenshots copied on the Mac paste correctly on Windows.** Deskflow 1.26 garbles them, and this works around it.
 - **Optional keyboard lighting** through [OpenRGB](https://openrgb.org): white on Windows, blue on the Mac, red or purple when the cursor is locked.
 
@@ -83,7 +84,7 @@ mac/install.sh
 
 **Mac:** open **MacWinKVM** any time for its window: Connect/Disconnect, *auto-connect when the desktop is reachable*, *launch at login (hidden)* and *show icon in the menu bar*. It never shows in the Dock, and closing the window keeps it running.
 
-**Windows:** everything starts at login. **Deskflow** sits in the tray as the server, and OpenRGB plus the lighting helper run in the background if lighting is enabled. Don't change settings in the Deskflow window; edit `settings.json` and re-run the install instead.
+**Windows:** everything starts at login. **Deskflow** sits in the tray as the server. A small background helper (the watchdog, and the lighting if enabled) and OpenRGB (only with lighting) run in the background. Don't change settings in the Deskflow window; edit `settings.json` and re-run the install instead.
 
 ## Manual checklist
 
@@ -109,6 +110,7 @@ See **[docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md)**. It covers the architecture
   - A big upload on the PC can also fill the connection. Limit its speed, or turn on QoS/SQM on your router.
 - **"Desktop certificate not trusted".** The PC made a new certificate, for example after an uninstall. Copy its `trust\server.sha256` to the Mac again and re-run `mac/install.sh`.
 - **The Mac doesn't move.** Accessibility isn't granted to **deskflow-core** (see step 5).
+- **PC keyboard and mouse dead after the Mac dropped off.** The watchdog should restart Deskflow within about 3 s. If it doesn't, run `windows\doctor.ps1`. Manual escape: **Ctrl+Alt+Del** → Task Manager → end Deskflow.
 - **The cursor starts locked.** Deskflow follows the Scroll Lock *toggle*, so press Scroll Lock once.
 - **A VPN on the PC** (e.g. Mullvad) must allow local network access, or the Mac can't reach it.
 

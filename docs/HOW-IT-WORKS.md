@@ -12,7 +12,7 @@
  │   (tray app, starts at login)   │  LAN first, then    │  └─ clipboard image fix           │   cursor, types keys
  │        │ writes server.log      │  ZeroTier/Tailscale │                                    │
  │        ▼                        │                     └──────────────────────────────────┘
- │ lighting helper (optional) ──► OpenRGB ──► keyboard backlight
+ │ helper: watchdog + lighting (optional) ──► OpenRGB ──► keyboard
  └─────────────────────────────────┘
 ```
 
@@ -67,7 +67,13 @@ When you copy an image on a Mac, macOS offers it to Deskflow as a BMP with a V4/
 
 While connected, the Mac app watches the clipboard. When a plain image lands there, it adds its own `com.microsoft.bmp` in the simplest format: a 40-byte header, 24-bit, uncompressed. Deskflow sends that one instead. File copies and rich documents are left alone.
 
-## 5. Keyboard lighting (optional, Windows)
+## 5. Watchdog (Windows, always on)
+
+Deskflow 1.26 can mark the active Mac as dead without handing input back to the PC, for example when the Mac switches Wi-Fi mid-session. The PC's keyboard and mouse then do nothing.
+
+`kvmlight/strand.py` (`StrandDetector`, pure and tested against the real recording) watches the server log. If the Mac is reported dead while it had the cursor, and no switch back follows within 3 s, the helper restarts Deskflow. Input comes back and the Mac app reconnects on its own. See [ADR 0002](adr/0002-watchdog-for-input-stranded-on-a-gone-mac.md).
+
+## 6. Keyboard lighting (optional, Windows)
 
 ```
 Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ──► OpenRGBDriver ──► OpenRGB SDK server ──► keyboard
@@ -77,8 +83,9 @@ Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ─�
 - **State:** `LightingTracker` (pure, unit-tested against the recordings) tracks which screen is active, whether it's locked, and whether the Mac is connected. It picks one colour. It knows that a *rejected duplicate* client's disconnect isn't the real Mac leaving.
 - **Driver:** `OpenRGBDriver` only uses Direct mode and `set_color`. Nothing is saved to the keyboard's flash (the Sinowealth driver streams colours and re-sends them every second), so switching all day doesn't wear out the keyboard.
 - **Always running:** OpenRGB runs headless (`--server`) at login, because Direct mode only lasts while it's running.
+- **Never blocks the watchdog:** lighting runs in a background thread. If OpenRGB stops seeing the keyboard, which happens after a USB reconnect because it doesn't re-scan, the helper restarts OpenRGB.
 
-## 6. Install, doctor and uninstall
+## 7. Install, doctor and uninstall
 
 - **Install is safe to re-run:** `windows/install.ps1` and `mac/install.sh` only change what differs, and they restart services only when their config or code changed.
 - **Downloads are pinned:** Deskflow comes from winget (Windows) or the release DMG checked against its `sums.txt` (Mac); OpenRGB from its release ZIP, checked against a pinned SHA-256.
@@ -89,7 +96,7 @@ Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ─�
 ```
 settings.example.json   copy to settings.json (git-ignored) and fill in
 kvmconfig/              settings → Deskflow config (Python, stdlib only)
-kvmlight/               keyboard lighting: tracker, OpenRGB driver, helper
+kvmlight/               background helper: watchdog (strand detector), lighting tracker, OpenRGB driver
 windows/                install / doctor / uninstall (PowerShell 5+)
 mac/                    Swift package (app, CLI, core), install / doctor / uninstall / test
 tests/  fixtures/       Python tests; recorded Deskflow logs

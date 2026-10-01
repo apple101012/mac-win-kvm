@@ -1,0 +1,35 @@
+[2026-09-30T21:29:12.385] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,321
+[2026-09-30T21:29:12.386] INFO: leaving screen
+[2026-09-30T21:29:12.515] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,382
+[2026-09-30T21:29:12.515] INFO: entering screen
+[2026-09-30T21:29:12.854] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,277
+[2026-09-30T21:29:12.855] INFO: leaving screen
+[2026-09-30T21:29:37.417] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,346
+[2026-09-30T21:29:37.417] INFO: entering screen
+[2026-09-30T21:29:37.671] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,251
+[2026-09-30T21:29:37.671] INFO: leaving screen
+[2026-09-30T21:29:41.190] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,426
+[2026-09-30T21:29:41.191] INFO: entering screen
+[2026-09-30T21:29:42.155] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,317
+[2026-09-30T21:29:42.156] INFO: leaving screen
+[2026-09-30T21:29:42.479] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,461
+[2026-09-30T21:29:42.479] INFO: entering screen
+[2026-09-30T21:29:42.566] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,354
+[2026-09-30T21:29:42.566] INFO: leaving screen
+[2026-09-30T21:29:44.008] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,601
+[2026-09-30T21:29:44.008] INFO: entering screen
+[2026-09-30T21:29:44.363] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,259
+[2026-09-30T21:29:44.364] INFO: leaving screen
+[2026-09-30T21:29:44.379] INFO: switch from "MacBook" to "DESKTOP-PC" at 66,337
+[2026-09-30T21:29:44.382] INFO: entering screen
+[2026-09-30T21:29:44.408] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,269
+[2026-09-30T21:29:44.409] INFO: leaving screen
+[2026-09-30T21:29:44.431] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,348
+[2026-09-30T21:29:44.436] INFO: entering screen
+[2026-09-30T21:29:44.465] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,269
+[2026-09-30T21:29:44.466] INFO: leaving screen
+[2026-09-30T21:29:44.489] INFO: switch from "MacBook" to "DESKTOP-PC" at 1,347
+[2026-09-30T21:29:44.492] INFO: entering screen
+[2026-09-30T21:29:44.517] INFO: switch from "DESKTOP-PC" to "MacBook" at 1709,268
+[2026-09-30T21:29:44.518] INFO: leaving screen
+[2026-09-30T21:29:47.255] IPC: client "MacBook" is dead

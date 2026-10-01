@@ -22,8 +22,8 @@ $OpenRgbSha   = '182A52A3C97C4C4AE52C80286B4260C9666C51C3447DBC416EE8945F66192E9
 $OpenRgbDir   = Join-Path $StateDir 'OpenRGB'
 $OpenRgbExe   = Join-Path $OpenRgbDir 'OpenRGB Windows 64-bit\OpenRGB.exe'
 $OpenRgbLink  = Join-Path ([Environment]::GetFolderPath('Startup')) 'OpenRGB server (macwinkvm).lnk'
-$LightingLink = Join-Path ([Environment]::GetFolderPath('Startup')) 'Keyboard lighting (macwinkvm).lnk'
-$LightingLog  = Join-Path $StateDir 'lighting.log'
+$HelperLink   = Join-Path ([Environment]::GetFolderPath('Startup')) 'Background helper (macwinkvm).lnk'
+$HelperLog    = Join-Path $StateDir 'helper.log'
 $SettingsFile = Join-Path $Repo 'settings.json'
 if (-not (Test-Path $SettingsFile)) { throw "settings.json not found: copy settings.example.json to settings.json and fill it in (or ask Claude to set it up)" }
 $Settings     = Get-Content $SettingsFile -Raw | ConvertFrom-Json
@@ -107,7 +107,7 @@ function New-Shortcut([string]$Link, [string]$Target, [string]$Arguments, [strin
     $sh.Save()
 }
 
-function Get-LightingHelper {
+function Get-Helper {
     @(Get-CimInstance Win32_Process -Filter "Name='pythonw.exe'" | Where-Object { $_.CommandLine -match 'kvmlight\.helper' })
 }
 
@@ -118,12 +118,12 @@ function Start-Detached([string]$CommandLine, [string]$WorkDir) {
         CommandLine = $CommandLine; CurrentDirectory = $WorkDir; ProcessStartupInformation = $startup } | Out-Null
 }
 
-function Start-Lighting {
-    if (-not (Get-Process OpenRGB -ErrorAction SilentlyContinue)) {
+function Start-Helper {
+    if ($LightingOn -and -not (Get-Process OpenRGB -ErrorAction SilentlyContinue)) {
         Start-Detached "`"$OpenRgbExe`" --server --noautoconnect" (Split-Path $OpenRgbExe)
         Start-Sleep 3   # let the SDK server come up before the helper connects
     }
-    if (-not (Get-LightingHelper)) {
+    if (-not (Get-Helper)) {
         Start-Detached "`"$(Get-Pythonw)`" -m kvmlight.helper `"$ServerLog`"" $Repo
     }
 }
