@@ -3,7 +3,6 @@ import unittest
 from pathlib import Path
 
 from kvmlight.tracker import LightingTracker
-from kvmlight.driver import OpenRGBDriver
 
 ROOT = Path(__file__).resolve().parent.parent
 COLORS = json.loads((ROOT / "settings.example.json").read_text())["lighting"]["colors"]
@@ -96,42 +95,6 @@ class TrackerTest(unittest.TestCase):
         self.assertEqual(t.color, WHITE)
 
 
-class FakeDevice:
-    def __init__(self, name="AULA F87 Pro"):
-        self.name = name
-        self.calls = []
-
-    def __getattr__(self, name):
-        def record(*args, **kwargs):
-            self.calls.append(name)
-        return record
-
-
-class FakeClient:
-    """Mimics openrgb.OpenRGBClient: .devices is a snapshot, refreshed from the server by update()."""
-
-    def __init__(self, devices):
-        self.server_devices = devices
-        self.devices = list(devices)
-
-    def update(self):
-        self.devices = list(self.server_devices)
-
-
-class DriverTest(unittest.TestCase):
-    def test_sets_direct_mode_and_colour_without_saving(self):
-        dev = FakeDevice()
-        d = OpenRGBDriver(connect=lambda: FakeClient([dev]), device_name="AULA F87 Pro")
-        d.set_color("FF0000")
-        d.set_color("0050FF")
-        self.assertEqual(dev.calls, ["set_mode", "set_color", "set_color"])
-        self.assertFalse(any("save" in c.lower() for c in dev.calls))
-
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class LogFollowerTest(unittest.TestCase):
     def setUp(self):
         import tempfile
@@ -174,27 +137,3 @@ class LogFollowerTest(unittest.TestCase):
         from kvmlight.helper import LogFollower
         self.assertEqual(LogFollower(self.path).lines(), [])
 
-
-class DriverFollowsOpenRGBDeviceListTest(unittest.TestCase):
-    def test_keyboard_dropping_out_is_reported_and_nothing_else_gets_coloured(self):
-        # OpenRGB drops the keyboard after a USB reconnect; the motherboard must not get our colours instead
-        kbd, board = FakeDevice("AULA F87 Pro"), FakeDevice("Motherboard")
-        client = FakeClient([kbd, board])
-        d = OpenRGBDriver(connect=lambda: client, device_name="AULA F87 Pro")
-        d.set_color("FFFFFF")
-        client.server_devices[:] = [board]
-        with self.assertRaises(LookupError):
-            d.set_color("0050FF")
-        self.assertEqual(board.calls, [])
-
-    def test_keyboard_coming_back_is_used_again_in_direct_mode(self):
-        kbd, board = FakeDevice("AULA F87 Pro"), FakeDevice("Motherboard")
-        client = FakeClient([kbd, board])
-        d = OpenRGBDriver(connect=lambda: client, device_name="AULA F87 Pro")
-        d.set_color("FFFFFF")
-        client.server_devices[:] = [board]
-        self.assertRaises(LookupError, d.set_color, "0050FF")
-        kbd2 = FakeDevice("AULA F87 Pro")
-        client.server_devices[:] = [kbd2, board]
-        d.set_color("0050FF")
-        self.assertEqual(kbd2.calls, ["set_mode", "set_color"])

@@ -56,17 +56,9 @@ if (-not $SkipFirewall -and -not (Test-FirewallRestricted)) {
 }
 
 if ($LightingOn) {
-    if (-not (Test-Path $OpenRgbExe)) {
-        Step 'Installing OpenRGB 1.0 (portable, for keyboard lighting)'
-        $zip = Join-Path $env:TEMP 'openrgb.zip'
-        $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -UseBasicParsing $OpenRgbUrl -OutFile $zip
-        if ((Get-FileHash $zip -Algorithm SHA256).Hash -ne $OpenRgbSha) { throw 'OpenRGB download checksum mismatch' }
-        Expand-Archive -Force $zip $OpenRgbDir; Remove-Item $zip
-    }
-    Invoke-Native { & python -c "import openrgb" }
-    if ($LASTEXITCODE) { Step 'Installing openrgb-python'; Invoke-Native { & python -m pip install --user --quiet 'openrgb-python>=0.3,<0.4' } }
-    if (-not (Test-Path $OpenRgbLink)) { Step 'Starting OpenRGB server at login'; New-Shortcut $OpenRgbLink $OpenRgbExe '--server --noautoconnect' (Split-Path $OpenRgbExe) }
+    # Lighting talks to the keyboard over USB (kvmlight/sinowealth.py); only needs the hidapi package.
+    Invoke-Native { & python -c "import hid" }
+    if ($LASTEXITCODE) { Step 'Installing hidapi (USB access for keyboard lighting)'; Invoke-Native { & python -m pip install --user --quiet 'hidapi>=0.14,<1' } }
 }
 
 # The helper always runs: it's the watchdog that frees input stuck on a Mac that went away (docs/adr/0002),

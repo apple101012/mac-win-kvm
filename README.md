@@ -11,9 +11,9 @@ Push the mouse off the edge of your Windows screen and it appears on the Mac; yo
 - **Mac-friendly keys.** Alt → ⌘, Win → ⌥, Ctrl → ⌃, so your hands stay in the Mac layout. Switch machines with Win+Esc, and lock the cursor with Scroll Lock (handy for games).
 - **Watchdog:** if the Mac drops off while it has the cursor (for example it switches Wi-Fi), Deskflow 1.26 can leave the PC's keyboard and mouse dead. A background helper notices within about 3 s and restarts Deskflow, so input comes back by itself.
 - **Screenshots copied on the Mac paste correctly on Windows.** Deskflow 1.26 garbles them, and this works around it.
-- **Optional keyboard lighting** through [OpenRGB](https://openrgb.org): white on Windows, blue on the Mac, red or purple when the cursor is locked.
+- **Optional keyboard lighting**, sent straight over USB in milliseconds: white on Windows, blue on the Mac, red or purple when the cursor is locked. Supported: Sinowealth `258A:010C` keyboards such as the **AULA F87 Pro**.
 
-> **Tested setup:** a Windows 11 desktop as the *server*, sharing its keyboard and mouse, and a macOS 14+ Mac as the *client*, on the same home network. Keyboard lighting was tested with an AULA F87 Pro; other OpenRGB keyboards may work. Other combinations (Mac as server, Linux) aren't supported yet.
+> **Tested setup:** a Windows 11 desktop as the *server*, sharing its keyboard and mouse, and a macOS 14+ Mac as the *client*, on the same home network. Keyboard lighting supports Sinowealth `258A:010C` keyboards (tested: AULA F87 Pro over USB). Other combinations (Mac as server, Linux) aren't supported yet.
 
 ## Easiest way: let Claude set it up
 
@@ -51,7 +51,7 @@ For the Windows side, either run Claude Code there too and paste the same prompt
 | `allowedSubnets` | which networks may connect, e.g. `192.168.1.0/24` plus your ZeroTier/Tailscale range |
 | `macModifiers` | key mapping on the Mac (default Alt→⌘, Win→⌥, Ctrl→⌃) |
 | `macMissionControl` | `unchanged`, `ctrl+tab` or `ctrl+up` |
-| `lighting.enabled` | `true` to colour an OpenRGB keyboard; `keyboard` is its OpenRGB name |
+| `lighting.enabled` | `true` to colour the keyboard. Supported: Sinowealth `258A:010C` keyboards, e.g. AULA F87 Pro, connected by USB cable |
 
 Use the same `settings.json` on both machines.
 
@@ -84,7 +84,7 @@ mac/install.sh
 
 **Mac:** open **MacWinKVM** any time for its window: Connect/Disconnect, *auto-connect when the desktop is reachable*, *launch at login (hidden)* and *show icon in the menu bar*. It never shows in the Dock, and closing the window keeps it running.
 
-**Windows:** everything starts at login. **Deskflow** sits in the tray as the server. A small background helper (the watchdog, and the lighting if enabled) and OpenRGB (only with lighting) run in the background. Don't change settings in the Deskflow window; edit `settings.json` and re-run the install instead.
+**Windows:** everything starts at login. **Deskflow** sits in the tray as the server. A small background helper runs too: the watchdog, plus the keyboard lighting if it's enabled. Don't change settings in the Deskflow window; edit `settings.json` and re-run the install instead.
 
 ## Manual checklist
 
@@ -133,5 +133,5 @@ mac/test.sh                                  # Mac connection logic, Deskflow lo
 
 ## Credits and licence
 
-- **Built on:** [Deskflow](https://github.com/deskflow/deskflow) (GPL-2.0), which does the actual keyboard/mouse sharing, and [OpenRGB](https://openrgb.org) (GPL-2.0) for lighting. Both are downloaded from their official releases at install time; neither is included in this repo.
+- **Built on:** [Deskflow](https://github.com/deskflow/deskflow) (GPL-2.0), which does the actual keyboard/mouse sharing. The keyboard lighting protocol was learned from [OpenRGB](https://openrgb.org)'s driver (GPL-2.0); no OpenRGB code is included. Deskflow is downloaded from their official releases at install time; neither is included in this repo.
 - **Licence:** this repo's own code is [MIT](LICENSE).

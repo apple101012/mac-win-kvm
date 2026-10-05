@@ -57,7 +57,7 @@ Number the questions, give your recommended answer, and let them answer in one g
    - (b) Windows feel: Ctrl→⌘, Win→⌃
 3. **Mission Control shortcut:** leave it unchanged (recommended), or Ctrl+Tab.
 4. **Fallback network:** if ZeroTier or Tailscale is on both machines, use it as a fallback (recommended). Otherwise, LAN only.
-5. **Keyboard lighting:** only if their keyboard is RGB and OpenRGB supports it. Off by default. If they want it, you'll check whether OpenRGB detects the keyboard.
+5. **Keyboard lighting:** only for Sinowealth `258A:010C` keyboards (e.g. AULA F87 Pro) on a USB cable. Off by default. To check, look for USB VID `258A` PID `010C` on the PC (`Get-PnpDevice -PresentOnly | ? InstanceId -match 'VID_258A&PID_010C'`). If it's there, lighting will work.
 6. **Auto-connect when home:** on or off. Recommended on once it works.
 
 ## 4. Write settings.json
@@ -77,7 +77,7 @@ Show them the file and confirm it. **Use the same file on both machines.** It's 
 Before each step, say in one line what it will do. Before anything that installs software or shows an admin prompt, get a yes.
 
 1. **PC:** `powershell -ExecutionPolicy Bypass -File windows\install.ps1`
-   - It installs Deskflow via winget (plus OpenRGB and `openrgb-python` if lighting is on) and generates the certificate.
+   - It installs Deskflow via winget (plus the `hidapi` Python package if lighting is on) and generates the certificate.
    - An **admin prompt** appears for the firewall: they click Yes.
    - It writes `trust\server.sha256`.
 2. **Carry the PC's fingerprint to the Mac.** The file holds one line (`v2:sha256:…`). They paste it to you, and you write it to the Mac's `trust/server.sha256`.

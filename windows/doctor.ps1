@@ -26,11 +26,8 @@ Check "listening on port $($Settings.port)" { Get-NetTCPConnection -State Listen
 Check 'background helper (watchdog) starts at login' { Test-Path $HelperLink } 'run windows\install.ps1'
 Check 'background helper (watchdog) running' { @(Get-Helper).Count -gt 0 } 'run windows\install.ps1'
 if ($LightingOn) {
-    Check 'OpenRGB installed' { Test-Path $OpenRgbExe } 'run windows\install.ps1'
-    Check 'openrgb-python installed' { Invoke-Native { & python -c "import openrgb" }; $LASTEXITCODE -eq 0 } 'run windows\install.ps1'
-    Check 'OpenRGB starts at login' { Test-Path $OpenRgbLink } 'run windows\install.ps1'
-    Check 'OpenRGB server running' { Get-Process OpenRGB -ErrorAction Stop } 'run windows\install.ps1'
-    Check 'keyboard colour set' { (Get-Content $HelperLog -Tail 20) -match 'colour [0-9A-F]{6}' } "see $HelperLog"
+    Check 'hidapi installed' { Invoke-Native { & python -c "import hid" }; $LASTEXITCODE -eq 0 } 'run windows\install.ps1'
+    Check 'keyboard colour set' { $t = Get-Content $HelperLog -Tail 30; ($t -match 'colour [0-9A-F]{6}|lighting back') -and -not (($t | Select-Object -Last 1) -match '^\S+ keyboard:') } "see $HelperLog"
 }
 Warn  'Ethernet power saving off (Green Ethernet, Power Saving Mode)' { @(Get-NetAdapterAdvancedProperty -Name Ethernet -ErrorAction Stop | Where-Object { $_.DisplayName -in 'Green Ethernet','Power Saving Mode' -and $_.DisplayValue -ne 'Disabled' }).Count -eq 0 } 'causes 100-800 ms lag; see README Troubleshooting'
 

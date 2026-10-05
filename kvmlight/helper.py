@@ -1,6 +1,6 @@
 """Background helper (Windows). Follows the Deskflow server log to:
 - restart Deskflow if input gets stuck on a Mac that went away (watchdog, always on), and
-- recolour the keyboard to show the active machine (only if lighting is enabled).
+- recolour the keyboard over USB to show the active machine (only if lighting is enabled).
 
 Usage: pythonw -m kvmlight.helper <deskflow server log>
 """
@@ -12,7 +12,7 @@ import threading
 import time
 from pathlib import Path
 
-from kvmlight.driver import OpenRGBDriver
+from kvmlight.sinowealth import SinowealthKeyboard
 from kvmlight.strand import StrandDetector
 from kvmlight.tracker import LightingTracker
 
@@ -69,16 +69,16 @@ def log(msg):
 
 
 class LightingWorker(threading.Thread):
-    """Applies the latest wanted colour in the background, so a slow or broken OpenRGB never blocks the watchdog.
-    If OpenRGB stops seeing the keyboard (it doesn't re-scan after a USB reconnect), restart OpenRGB."""
+    """Streams the wanted colour to the keyboard: immediately on change, and every KEEPALIVE seconds otherwise
+    (the keyboard drops out of direct mode without a steady stream). Never blocks the watchdog."""
 
-    RETRY = 10
-    MISSES_BEFORE_RESTART = 2
+    KEEPALIVE = 0.4
+    RETRY = 3
 
-    def __init__(self, driver, openrgb_exe):
+    def __init__(self, keyboard):
         super().__init__(daemon=True)
-        self.driver, self.openrgb_exe = driver, openrgb_exe
-        self.wanted, self.shown, self.misses = None, None, 0
+        self.keyboard = keyboard
+        self.wanted, self.shown, self.failing = None, None, False
         self.changed = threading.Event()
 
     def want(self, color):
@@ -87,32 +87,23 @@ class LightingWorker(threading.Thread):
 
     def run(self):
         while True:
-            self.changed.wait(timeout=self.RETRY)
+            self.changed.wait(timeout=self.RETRY if self.failing else self.KEEPALIVE)
             self.changed.clear()
             color = self.wanted
-            if color is None or color == self.shown:
+            if color is None:
                 continue
             try:
-                self.driver.set_color(color)
-                self.shown, self.misses = color, 0
-                log(f"colour {color}")
-            except LookupError as e:
-                self.misses += 1
-                log(f"OpenRGB: {e}")
-                if self.misses >= self.MISSES_BEFORE_RESTART and self.openrgb_exe:
-                    log("OpenRGB lost the keyboard, restarting it to re-detect devices")
-                    restart_openrgb(self.openrgb_exe)
-                    self.misses = 0
-            except Exception as e:   # OpenRGB not up yet: retry on the next tick
-                log(f"OpenRGB: {e}")
-
-
-def restart_openrgb(exe):
-    subprocess.run(["taskkill", "/F", "/IM", "OpenRGB.exe"], capture_output=True, creationflags=NO_WINDOW)
-    time.sleep(1)
-    subprocess.Popen([exe, "--server", "--noautoconnect"], cwd=os.path.dirname(exe), creationflags=DETACHED | NO_WINDOW,
-                     close_fds=True)
-    time.sleep(8)   # device detection
+                self.keyboard.send(color)
+                if self.failing:
+                    log("keyboard lighting back")
+                self.failing = False
+                if color != self.shown:
+                    self.shown = color
+                    log(f"colour {color}")
+            except (OSError, LookupError) as e:
+                if not self.failing:
+                    log(f"keyboard: {e}")
+                self.failing, self.shown = True, None
 
 
 def main(log_path):
@@ -122,15 +113,9 @@ def main(log_path):
     tracker = LightingTracker(server, client, lighting_cfg.get("colors") or {k: "FFFFFF" for k in ("windows", "mac", "lockedWindows", "lockedMac")})
     strand = StrandDetector(server, client)
 
-    def connect():
-        from openrgb import OpenRGBClient
-        return OpenRGBClient("127.0.0.1", 6742, name="macwinkvm")
-
     lighting = None
     if lighting_cfg.get("enabled"):
-        openrgb_exe = os.path.expandvars(r"%LOCALAPPDATA%\macwinkvm\OpenRGB\OpenRGB Windows 64-bit\OpenRGB.exe")
-        lighting = LightingWorker(OpenRGBDriver(connect, lighting_cfg["keyboard"]),
-                                  openrgb_exe if os.path.exists(openrgb_exe) else None)
+        lighting = LightingWorker(SinowealthKeyboard())
         lighting.start()
         lighting.want(tracker.color)
 

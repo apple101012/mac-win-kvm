@@ -12,7 +12,7 @@
  │   (tray app, starts at login)   │  LAN first, then    │  └─ clipboard image fix           │   cursor, types keys
  │        │ writes server.log      │  ZeroTier/Tailscale │                                    │
  │        ▼                        │                     └──────────────────────────────────┘
- │ helper: watchdog + lighting (optional) ──► OpenRGB ──► keyboard
+ │ helper: watchdog + lighting (optional) ──► USB ──► keyboard
  └─────────────────────────────────┘
 ```
 
@@ -76,19 +76,20 @@ Deskflow 1.26 can mark the active Mac as dead without handing input back to the 
 ## 6. Keyboard lighting (optional, Windows)
 
 ```
-Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ──► OpenRGBDriver ──► OpenRGB SDK server ──► keyboard
+Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ──► LightingWorker ──► USB (HID feature report) ──► keyboard
 ```
 
 - **Log format:** the server log is the event source. Its line formats are pinned in [ADR 0001](adr/0001-deskflow-events-from-server-log.md), with real recordings in `fixtures/`.
 - **State:** `LightingTracker` (pure, unit-tested against the recordings) tracks which screen is active, whether it's locked, and whether the Mac is connected. It picks one colour. It knows that a *rejected duplicate* client's disconnect isn't the real Mac leaving.
-- **Driver:** `OpenRGBDriver` only uses Direct mode and `set_color`. Nothing is saved to the keyboard's flash (the Sinowealth driver streams colours and re-sends them every second), so switching all day doesn't wear out the keyboard.
-- **Always running:** OpenRGB runs headless (`--server`) at login, because Direct mode only lasts while it's running.
-- **Never blocks the watchdog:** lighting runs in a background thread. If OpenRGB stops seeing the keyboard, which happens after a USB reconnect because it doesn't re-scan, the helper restarts OpenRGB.
+- **Talking to the keyboard:** `kvmlight/sinowealth.py` sends a 520-byte "stream LEDs" frame to the keyboard's lighting channel (interface 1, usage page `0xFF00`). It takes about 12 ms. The protocol was learned from OpenRGB's driver; nothing is ever written to the keyboard's flash.
+- **Why not OpenRGB:** we tried it first. Its Python SDK took about 10 s per change with OpenRGB 1.0, and OpenRGB lost the keyboard after USB reconnects and then coloured the motherboard instead.
+- **Keep-alive:** the keyboard leaves direct mode unless frames keep coming, so `LightingWorker` re-sends the colour every 0.4 s, and immediately on a change. If the keyboard is unplugged, it reopens it when it's back.
+- **Never blocks the watchdog:** lighting runs in its own thread.
 
 ## 7. Install, doctor and uninstall
 
 - **Install is safe to re-run:** `windows/install.ps1` and `mac/install.sh` only change what differs, and they restart services only when their config or code changed.
-- **Downloads are pinned:** Deskflow comes from winget (Windows) or the release DMG checked against its `sums.txt` (Mac); OpenRGB from its release ZIP, checked against a pinned SHA-256.
+- **Downloads are pinned:** Deskflow comes from winget (Windows) or the release DMG checked against its `sums.txt` (Mac). Lighting only needs the `hidapi` Python package.
 - **Doctor checks each part:** installed, configured, trusted, running, reachable, permissions, the firewall scope, and the Ethernet power-saving settings that cause lag.
 
 ## Files
@@ -96,7 +97,7 @@ Deskflow server.log ──► kvmlight/helper.py ──► LightingTracker ─�
 ```
 settings.example.json   copy to settings.json (git-ignored) and fill in
 kvmconfig/              settings → Deskflow config (Python, stdlib only)
-kvmlight/               background helper: watchdog (strand detector), lighting tracker, OpenRGB driver
+kvmlight/               background helper: watchdog (strand detector), lighting tracker, USB keyboard driver
 windows/                install / doctor / uninstall (PowerShell 5+)
 mac/                    Swift package (app, CLI, core), install / doctor / uninstall / test
 tests/  fixtures/       Python tests; recorded Deskflow logs

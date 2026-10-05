@@ -17,11 +17,6 @@ $OpenSsl      = 'C:\Program Files\Git\usr\bin\openssl.exe'
 $Winget       = Join-Path $env:LOCALAPPDATA 'Microsoft\WindowsApps\winget.exe'
 $ServerFpFile = Join-Path $Repo 'trust\server.sha256'
 $MacFpFile    = Join-Path $Repo 'trust\mac.sha256'
-$OpenRgbUrl   = 'https://github.com/CalcProgrammer1/OpenRGB/releases/download/release_1.0/OpenRGB_1.0_Windows_64_81bbe18.zip'
-$OpenRgbSha   = '182A52A3C97C4C4AE52C80286B4260C9666C51C3447DBC416EE8945F66192E90'
-$OpenRgbDir   = Join-Path $StateDir 'OpenRGB'
-$OpenRgbExe   = Join-Path $OpenRgbDir 'OpenRGB Windows 64-bit\OpenRGB.exe'
-$OpenRgbLink  = Join-Path ([Environment]::GetFolderPath('Startup')) 'OpenRGB server (macwinkvm).lnk'
 $HelperLink   = Join-Path ([Environment]::GetFolderPath('Startup')) 'Background helper (macwinkvm).lnk'
 $HelperLog    = Join-Path $StateDir 'helper.log'
 $SettingsFile = Join-Path $Repo 'settings.json'
@@ -119,10 +114,6 @@ function Start-Detached([string]$CommandLine, [string]$WorkDir) {
 }
 
 function Start-Helper {
-    if ($LightingOn -and -not (Get-Process OpenRGB -ErrorAction SilentlyContinue)) {
-        Start-Detached "`"$OpenRgbExe`" --server --noautoconnect" (Split-Path $OpenRgbExe)
-        Start-Sleep 3   # let the SDK server come up before the helper connects
-    }
     if (-not (Get-Helper)) {
         Start-Detached "`"$(Get-Pythonw)`" -m kvmlight.helper `"$ServerLog`"" $Repo
     }
