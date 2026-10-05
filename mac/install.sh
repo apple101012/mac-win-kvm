@@ -22,7 +22,7 @@ if [[ "$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' "$DF_PLIST" 2>/dev/null
   /usr/libexec/PlistBuddy -c 'Add :LSUIElement bool true' "$DF_PLIST" 2>/dev/null || /usr/libexec/PlistBuddy -c 'Set :LSUIElement true' "$DF_PLIST"
   codesign --force --deep --sign - /Applications/Deskflow.app 2>/dev/null
   /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f /Applications/Deskflow.app
-  echo "    -> re-allow deskflow-core in System Settings > Privacy & Security > Accessibility (turn it off and on), then reconnect"
+  echo "    -> in System Settings > Privacy & Security, remove any old Deskflow / deskflow-core entries, then add /Applications/Deskflow.app under BOTH Accessibility and Input Monitoring, then reconnect"
 fi
 # drop any Deskflow entries the Dock already recorded in "recent apps"
 if defaults read com.apple.dock recent-apps 2>/dev/null | grep -qi deskflow; then
@@ -86,8 +86,8 @@ pgrep -x macwinkvm >/dev/null || { step "Starting macwinkvm (look for the keyboa
 cat <<'MSG'
 ==> Done. Run mac/doctor.sh to verify.
     First time only:
-      - Open macwinkvm → Connect. macOS asks for Accessibility for "deskflow-core":
-        System Settings → Privacy & Security → Accessibility → turn it on, then Disconnect/Connect.
+      - Open macwinkvm → Connect. macOS needs permission for Deskflow: System Settings → Privacy & Security →
+        add /Applications/Deskflow.app under BOTH Accessibility and Input Monitoring, then Disconnect/Connect.
       - Open macwinkvm (Spotlight / Applications) any time for the window: Connect, auto-connect,
         "Launch at login (hidden)", and whether to show the menu-bar icon. It never shows in the Dock.
 MSG

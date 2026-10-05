@@ -85,7 +85,7 @@ Before each step, say in one line what it will do. Before anything that installs
    - It installs Deskflow from the official DMG (checksum-verified), builds and installs `MacWinKVM.app`, and writes `trust/mac.sha256`.
 4. **Carry the Mac's fingerprint to the PC** the same way, into `trust\mac.sha256`, then **re-run `windows\install.ps1`**.
 5. **First connect:** they open **MacWinKVM** and click Connect.
-   - macOS asks for **Accessibility** for **deskflow-core**. Guide them: System Settings → Privacy & Security → Accessibility → turn on deskflow-core.
+   - macOS needs permission for Deskflow. Guide them: System Settings → Privacy & Security → add **/Applications/Deskflow.app** (the app, not the deskflow-core file inside it) under **both Accessibility and Input Monitoring**, with both switches on. If an old entry exists, remove it first. `tccutil reset Accessibility org.deskflow.deskflow` clears stale ones.
    - Then Disconnect and Connect again.
    - Suggest turning on *launch at login (hidden)* and, if they want, auto-connect.
 
@@ -101,7 +101,7 @@ Before each step, say in one line what it will do. Before anything that installs
   - If the PC → router ping is slow, its Ethernet power saving (Green Ethernet / Power Saving Mode) is the usual culprit. `windows\doctor.ps1` warns about it. Turning it off needs an admin prompt and resets the network for a few seconds, so ask first.
   - A big upload on the PC also causes lag. Suggest limiting it, or router QoS/SQM.
 - **"Desktop certificate not trusted":** the PC certificate was regenerated. Carry `trust\server.sha256` over again and re-run `mac/install.sh`.
-- **The Mac cursor doesn't move:** Accessibility isn't granted to deskflow-core.
+- **The mouse sticks at the Mac's edge / the Mac cursor doesn't move:** the permission is missing or stale (client log: `failed to create quartz event tap`). Disconnect first so the PC gets its input back. Run `tccutil reset Accessibility org.deskflow.deskflow` and `tccutil reset ListenEvent org.deskflow.deskflow`, then have them add Deskflow.app under Accessibility and Input Monitoring.
 - **Unreachable:** the IP changed (check `ipconfig`), a VPN is blocking the LAN, or the firewall subnets are wrong in `allowedSubnets`.
 - **Starts locked:** the Scroll Lock toggle is on; press it.
 - **PC keyboard and mouse dead after the Mac dropped off** (e.g. it switched Wi-Fi while it had the cursor): the watchdog restarts Deskflow within about 3 s (`helper.log` says `watchdog:`). If it didn't, check that the helper is running (`windows\doctor.ps1`). Manual escape: Ctrl+Alt+Del → Task Manager → end Deskflow.
