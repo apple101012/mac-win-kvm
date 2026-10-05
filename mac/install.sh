@@ -14,6 +14,30 @@ if [[ ! -x "$DESKFLOW_CORE" ]]; then
   hdiutil detach -quiet "$tmp/mnt"; rm -rf "$tmp"
 fi
 
+# Never show Deskflow in the Dock (not even in "recent apps"): mark it as an agent app. Editing Info.plist
+# breaks Deskflow's ad-hoc signature, so re-sign it; macOS then asks for Accessibility for deskflow-core again.
+DF_PLIST="/Applications/Deskflow.app/Contents/Info.plist"
+if [[ "$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' "$DF_PLIST" 2>/dev/null)" != "true" ]]; then
+  step "Hiding Deskflow from the Dock (agent app)"
+  /usr/libexec/PlistBuddy -c 'Add :LSUIElement bool true' "$DF_PLIST" 2>/dev/null || /usr/libexec/PlistBuddy -c 'Set :LSUIElement true' "$DF_PLIST"
+  codesign --force --deep --sign - /Applications/Deskflow.app 2>/dev/null
+  /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f /Applications/Deskflow.app
+  echo "    -> re-allow deskflow-core in System Settings > Privacy & Security > Accessibility (turn it off and on), then reconnect"
+fi
+# drop any Deskflow entries the Dock already recorded in "recent apps"
+if defaults read com.apple.dock recent-apps 2>/dev/null | grep -qi deskflow; then
+  python3 - <<'PY'
+import plistlib, subprocess, tempfile
+raw = subprocess.run(["defaults", "export", "com.apple.dock", "-"], capture_output=True, check=True).stdout
+d = plistlib.loads(raw)
+d["recent-apps"] = [a for a in d.get("recent-apps", []) if b"deskflow" not in plistlib.dumps(a).lower()]
+with tempfile.NamedTemporaryFile(suffix=".plist", delete=False) as f:
+    plistlib.dump(d, f)
+subprocess.run(["defaults", "import", "com.apple.dock", f.name], check=True)
+PY
+  killall Dock 2>/dev/null || true
+fi
+
 mkdir -p "$STATE_DIR"
 ensure_client_cert
 write_route_settings

@@ -7,6 +7,7 @@ check() { local name="$1" fix="$2"; shift 2; if "$@" >/dev/null 2>&1; then echo 
 warn()  { local name="$1" fix="$2"; shift 2; if "$@" >/dev/null 2>&1; then echo "PASS  $name"; else echo "WARN  $name  -> $fix"; fi; }
 
 check "Deskflow installed" "run mac/install.sh" test -x "$DESKFLOW_CORE"
+check "Deskflow hidden from the Dock" "run mac/install.sh" bash -c "[[ \"\$(/usr/libexec/PlistBuddy -c 'Print :LSUIElement' /Applications/Deskflow.app/Contents/Info.plist 2>/dev/null)\" == true ]]"
 check "Mac certificate exists" "run mac/install.sh" test -f "$CERT_FILE"
 check "trust/mac.sha256 matches the certificate" "run mac/install.sh, then copy trust/mac.sha256 to the desktop" \
   bash -c "[[ \"\$(cat '$MAC_FP_FILE')\" == \"$(cert_fingerprint "$CERT_FILE" 2>/dev/null)\" ]]"

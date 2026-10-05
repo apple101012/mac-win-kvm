@@ -5,6 +5,7 @@
 Push the mouse off the edge of your Windows screen and it appears on the Mac; your keyboard follows. Push it back and you're on Windows again. It's built on the open-source [Deskflow](https://github.com/deskflow/deskflow) and adds:
 
 - **Setup that installs itself.** The installers are safe to re-run, and a `doctor` script checks each machine.
+- **Nothing in the Dock.** The install marks Deskflow as an agent app, so it never appears in the Dock, not even under recent apps.
 - **A Mac app with no Dock icon.** Open it for Connect/Disconnect and settings, and optionally show a menu-bar icon.
 - **LAN first, with a fallback.** If your home network is flaky, it switches to ZeroTier or Tailscale. It reconnects after the Mac sleeps and can auto-connect when you get home.
 - **Mutual TLS pinning.** Each machine only talks to the other one, and the Windows firewall is limited to your subnets.
