@@ -108,8 +108,14 @@ class FakeDevice:
 
 
 class FakeClient:
+    """Mimics openrgb.OpenRGBClient: .devices is a snapshot, refreshed from the server by update()."""
+
     def __init__(self, devices):
-        self.devices = devices
+        self.server_devices = devices
+        self.devices = list(devices)
+
+    def update(self):
+        self.devices = list(self.server_devices)
 
 
 class DriverTest(unittest.TestCase):
@@ -167,3 +173,28 @@ class LogFollowerTest(unittest.TestCase):
     def test_missing_file_is_fine(self):
         from kvmlight.helper import LogFollower
         self.assertEqual(LogFollower(self.path).lines(), [])
+
+
+class DriverFollowsOpenRGBDeviceListTest(unittest.TestCase):
+    def test_keyboard_dropping_out_is_reported_and_nothing_else_gets_coloured(self):
+        # OpenRGB drops the keyboard after a USB reconnect; the motherboard must not get our colours instead
+        kbd, board = FakeDevice("AULA F87 Pro"), FakeDevice("Motherboard")
+        client = FakeClient([kbd, board])
+        d = OpenRGBDriver(connect=lambda: client, device_name="AULA F87 Pro")
+        d.set_color("FFFFFF")
+        client.server_devices[:] = [board]
+        with self.assertRaises(LookupError):
+            d.set_color("0050FF")
+        self.assertEqual(board.calls, [])
+
+    def test_keyboard_coming_back_is_used_again_in_direct_mode(self):
+        kbd, board = FakeDevice("AULA F87 Pro"), FakeDevice("Motherboard")
+        client = FakeClient([kbd, board])
+        d = OpenRGBDriver(connect=lambda: client, device_name="AULA F87 Pro")
+        d.set_color("FFFFFF")
+        client.server_devices[:] = [board]
+        self.assertRaises(LookupError, d.set_color, "0050FF")
+        kbd2 = FakeDevice("AULA F87 Pro")
+        client.server_devices[:] = [kbd2, board]
+        d.set_color("0050FF")
+        self.assertEqual(kbd2.calls, ["set_mode", "set_color"])

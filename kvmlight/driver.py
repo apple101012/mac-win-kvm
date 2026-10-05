@@ -6,17 +6,28 @@ Only Direct mode + set_color: streamed to the keyboard, never saved to its flash
 
 
 class OpenRGBDriver:
+    """Finds the keyboard by name in OpenRGB's *current* device list on every change.
+
+    OpenRGB drops a keyboard after a USB reconnect and the remaining devices shift up, so a cached device
+    would silently point at something else (e.g. the motherboard). Raises LookupError when it's missing.
+    """
+
     def __init__(self, connect, device_name):
-        self._connect = connect          # () -> openrgb.OpenRGBClient-like object with .devices
+        self._connect = connect          # () -> openrgb.OpenRGBClient-like object with .devices and .update()
         self._device_name = device_name
+        self._client = None
         self._device = None
 
-    def _get_device(self):
-        if self._device is None:
-            client = self._connect()
-            matches = [d for d in client.devices if d.name == self._device_name]
-            if not matches:
-                raise LookupError(f"OpenRGB does not see {self._device_name!r}")
+    def _current_device(self):
+        if self._client is None:
+            self._client = self._connect()
+        else:
+            self._client.update()        # refresh the device list from the server
+        matches = [d for d in self._client.devices if d.name == self._device_name]
+        if not matches:
+            self._device = None
+            raise LookupError(f"OpenRGB does not see {self._device_name!r}")
+        if matches[0] is not self._device:
             self._device = matches[0]
             self._device.set_mode("direct")
         return self._device
@@ -24,9 +35,11 @@ class OpenRGBDriver:
     def set_color(self, hex_color):
         rgb = _rgb(hex_color)
         try:
-            self._get_device().set_color(rgb, fast=True)
+            self._current_device().set_color(rgb, fast=True)
+        except LookupError:
+            raise
         except Exception:
-            self._device = None   # reconnect next time (OpenRGB restarted, keyboard replugged)
+            self._client = self._device = None   # reconnect next time (OpenRGB restarted)
             raise
 
 
